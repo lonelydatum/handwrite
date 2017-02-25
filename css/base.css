@@ -1,0 +1,19 @@
+
+body {
+	background-color: white;
+	font-family: 'Delius', cursive;
+}
+
+button {
+	border: 2px solid white;
+	background-color: transparent;
+	padding: 6px 16px;
+	color: white;
+	font-size: 22px;
+	display: block;
+	cursor: pointer;
+	margin: 0 20px;
+}
+
+
+

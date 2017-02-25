@@ -1,84 +1,15 @@
-
-body {
-	background-color: #333;
-	font-family: 'Abel', sans-serif;
-
-}
-
-button {
-	border: 2px solid white;
-	background-color: transparent;
-	padding: 6px 16px;
-	color: white;
-	font-size: 22px;
-	display: block;
-	cursor: pointer;
-}
-
-#dragTarget {
-	border: 10px dashed #ccc;
-	width: 600px;
-	height: 200px;
-	margin: 20px auto;
-	display:flex;
-	justify-content: center;
-	align-items: center;
-}
-#dragTarget.hover {
-	border: 10px dashed #FF0000;
-}
-
-.holder {
-	position: relative;
-}
-
-canvas{
-	border: 1px solid yellow;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-#renderItem img {
-	opacity: 0;
-}
-
-#signature {
-	display: flex;
-	min-width: 900px;
-	max-width: 1200px;
-	margin: 0 auto;
-	color: white;
-	font-size: 20px;
-
-}
-
-.column {
-	border: 1px solid green;
-	flex: 1;
-}
-
-#brushSize {
-	width: 300px;
-}
+@import url("css/reset.css");
+@import url("css/base.css");
+@import url("css/dropfile.css");
+@import url("css/handwrite.css");
+@import url("css/capture.css");
+@import url("css/render.css");
 
 
-/*
-#capture {
-	.holder {
-		position: relative;
-		img{
-			opacity: .3;
-		}
-		canvas {
-			border: 1px solid red;
-			position: absolute;
-			left:0;
-			top:0;
-		}
-	}
-	p.points{
-		color: pink;
-		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	}
-}*/
+
+
+
+
+
+
+

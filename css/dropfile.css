@@ -1,0 +1,17 @@
+
+#dragTarget {
+	border: 5px dashed rgba(0,0,0,.2);
+	min-width: 900px;
+	max-width: 1200px;
+	height: 200px;
+	margin: 20px auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: rgba(0,0,0,.2);
+	font-size: 55px;
+
+}
+#dragTarget.hover {
+	border: 10px dashed #FF0000;
+}

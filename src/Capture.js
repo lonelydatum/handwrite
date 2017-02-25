@@ -3,7 +3,7 @@ import Signals from 'signals'
 
 
 class Capture {
-	constructor(canvas, radius=20) {
+	constructor(canvas, radius=20, points=[]) {
 		this.signals = {
 			pointsUpdated: new Signals()
 		}
@@ -17,7 +17,7 @@ class Capture {
 		this.canvas.addEventListener('mousedown', this.onDown.bind(this), false )
 		this.canvas.addEventListener('mouseup', this.onUp.bind(this), false )
 
-		this.points = []
+		this.points = points
 
 		this.index = 0
 
@@ -26,9 +26,14 @@ class Capture {
 		this.prev = {x:-1, y:-1}
 
 		this.storage = []
-		this.currentItem = []
+
+		this.currentItem = this.points.slice();
+
+		this.draw()
 
 		document.onkeydown = this.onKeyPress.bind(this, this);
+		this.onUp()
+		console.log(this.storage, this.currentItem);
 	}
 
 	setBrush(value) {
@@ -71,7 +76,7 @@ class Capture {
 		this.isDown = true
 	}
 
-	onUp(e) {
+	onUp() {
 		this.isDown = false
 		this.storage.push(this.currentItem)
 		this.merge()
@@ -107,16 +112,17 @@ class Capture {
 		this.updateDraw()
 	}
 
-	// clear() {
-	// 	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-	// }
+	clear() {
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+	}
 
 	draw() {
+		this.clear()
 		this.index = 0
 		const si = setInterval(()=>{
 			const point = this.points[this.index]
 			if(point) {
-				// Circle(this.ctx, point.x, point.y, this.radius, '#00FF00')
+				this.drawCircle(point.x, point.y)
 			} else {
 				clearInterval(si)
 			}

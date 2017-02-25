@@ -1,0 +1,15 @@
+#render {
+	background-color: white;
+	color: black;
+	border: 11px solid #c2c305;
+}
+
+#renderItem img {
+	opacity: 0;
+}
+
+
+#render button {
+	color: black;
+	border-color: black;
+}

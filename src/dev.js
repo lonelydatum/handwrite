@@ -18,50 +18,58 @@ const undo = document.getElementById('undo');
 const totalPoint = document.getElementById('totalPoint');
 
 const startOver = document.getElementById('startOver');
-
+const drawButton = document.getElementById('drawButton');
 
 
 
 class Dev {
 	constructor() {
 
+		this.points = []
+		this.brush = brushSize.value
+		this.image = null
 
-		brushSize.addEventListener('change', this.brushUpdate.bind(this))
-		this.capture = new Capture(captureCanvas, brushSize.value)
-		this.brushUpdate()
-
-
-		this.dragFile = new DragFile(dragTarget)
-		this.dragFile.signals.imageReady.add((imageData)=>{
-			this.loadImage(imageData);
-		})
-
-		const imageData = localStorage.getItem('image')
-		if(imageData) {
-			this.loadImage(imageData)
+		if(localStorage.length>0) {
+			this.updateFromLocal()
+			this.ready()
 		}
 
 
-		const drawButton = document.getElementById('drawButton');
-		drawButton.addEventListener('click', ()=>{
-			this.draw(this.capture.points)
-		})
+		this.dragFile = new DragFile(dragTarget)
+		this.dragFile.signals.imageReady.add(this.loadImage.bind(this))
 
+		brushSize.addEventListener('change', ()=>this.brushUpdate(brushSize.value))
+		drawButton.addEventListener('click', this.draw.bind(this), false )
 		undo.addEventListener('click', this.undo.bind(this))
-
 		startOver.addEventListener('click', this.capture.startOver.bind(this.capture) )
+	}
 
-		this.pointsUpdated([])
+	ready() {
+		this.capture = new Capture(captureCanvas, brushSize.value, this.points)
+		this.handwrite = new Handwrite(renderCanvas, renderImage)
 
+		this.capture.signals.pointsUpdated.add(this.pointsUpdated)
+		this.loadImage(this.image)
+		this.pointsUpdated(this.points);
+		this.brushUpdate(this.brush)
+	}
+
+	updateFromLocal() {
+		this.image = localStorage.getItem('image')
+		this.points = JSON.parse(localStorage.getItem('points'))
+		this.brush = localStorage.getItem('brush')
 	}
 
 	undo() {
 		this.capture.undo()
 	}
 
-	brushUpdate() {
-		this.capture.setBrush(brushSize.value)
-		brushSizeResult.innerHTML = `Brush size of: ${brushSize.value}`
+	brushUpdate(size) {
+		brushSize.value = size;
+		brushSizeResult.innerHTML = `Brush size of: ${size}`
+		localStorage.setItem('brush', size)
+		this.capture.setBrush(size)
+		this.capture.draw()
 	}
 
 	loadImage(imageData) {
@@ -70,20 +78,25 @@ class Dev {
 		renderCanvas.width = captureCanvas.width = captureImage.width
 		renderCanvas.height = captureCanvas.height = captureImage.height
 
-		this.capture.signals.pointsUpdated.add(this.pointsUpdated)
 
-		this.handwrite = new Handwrite(renderCanvas, renderImage)
+		const holders = document.querySelectorAll('#handwrite .holder')
+		for(let i=0;i<holders.length; i++) {
+			const holderItem = holders[i]
+			holderItem.style.width = `${captureImage.width}px`
+			holderItem.style.height = `${captureImage.height}px`
+		}
+
 	}
 
 
-	draw(points) {
-		this.handwrite.draw(points, {radius:this.capture.radius})
+	draw() {
+		this.handwrite.draw(this.capture.points, {radius:this.capture.radius})
 	}
 
 
 	pointsUpdated(points) {
 		pointsTextArea.value = JSON.stringify(points)
-		totalPoint.innerHTML = `Length of array ${points.length}`
+		totalPoint.innerHTML = `${points.length}`
 		localStorage.setItem('points', pointsTextArea.value)
 	}
 

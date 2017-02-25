@@ -3,9 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Handwrite</title>
-	<style>
-
-	</style>
+	<link href="https://fonts.googleapis.com/css?family=Delius" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="./styles.css">
 </head>
 <body>
@@ -19,33 +17,47 @@
 
 
 
-<div id="signature">
+<div id="handwrite">
 
 	<div id="capture" class="column">
-		<h3>Sign Here</h3>
+		<h3>Be the artist and start painting</h3>
+
 
 		<div class="holder" id="captureItem">
+			<img class="checker" src="./images/checker.png" />
 			<img id="captureImage">
 			<canvas id="captureCanvas" height="500"></canvas>
 		</div>
 
-		<input type="range" id="brushSize" value="5" min="1" max="10"><span id="brushSizeResult"></span>
-		<button id="undo">Undo (ctr+z)</button>
-		<button id="startOver">Start Over</button>
-		<span id="totalPoint"></span>
-		<textarea rows="60" cols="100" id="pointsTextArea"></textarea>
+		<div class="brush">
+			<div id="brushSizeResult"></div>
+			<input type="range" id="brushSize" value="5" min="1" max="10">
+		</div>
+
+		<div class="points">
+			<span>looooooongArray.length = </span><span id="totalPoint"></span>
+			<textarea rows="20" cols="50" id="pointsTextArea"></textarea>
+		</div>
+
+		<div class="ui-holder">
+			<button id="undo">Undo (ctr+z)</button>
+			<button id="startOver">Start Over</button>
+		</div>
 
 	</div>
 
 	<div class="column" id="render">
-		<h3>Preview Animation Here</h3>
+		<h3>Preview Masking effects using handwrite.js</h3>
 
 
 		<div class="holder" id="renderItem">
 			<canvas id="renderCanvas"></canvas>
 			<img id="renderImage">
 		</div>
-		<button id="drawButton">DRAW</button>
+
+		<div class="ui-holder">
+			<button id="drawButton">DRAW</button>
+		</div>
 
 	</div>
 </div>

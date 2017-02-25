@@ -1,0 +1,53 @@
+#capture {
+	background-color: #00ff00;
+	color: white;
+	/*background: url(paint.png) no-repeat #00ff00;*/
+}
+
+#captureItem {
+	overflow: hidden;
+}
+
+#capture .checker {
+	position: absolute;
+	top:0;
+	left:0;
+	z-index: 0;
+}
+
+#captureImage {
+	position: relative;
+	z-index: 1;
+}
+
+#captureCanvas {
+	z-index: 1;
+}
+
+
+#capture textarea {
+	width: 100%;
+	border:none;
+}
+
+
+.brush {
+	width: 100%;
+}
+
+#brushSize {
+	width: 100%;
+}
+
+.points {
+	margin-top: 22px;
+	width: 100%;
+}
+
+.points #totalPoint {
+	text-align: center;
+}
+
+.brush {
+	margin-top: 22px;
+}
