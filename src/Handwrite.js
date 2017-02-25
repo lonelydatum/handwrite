@@ -1,6 +1,6 @@
 import {Circle} from './Helper'
 
-class Render {
+class Handwrite {
 	constructor(canvas, image) {
 
 		this.image = image
@@ -83,4 +83,4 @@ class Render {
 	}
 }
 
-export default Render
+export default Handwrite

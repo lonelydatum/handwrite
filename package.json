@@ -13,7 +13,6 @@
     "build:main": "babel src",
     "build:umd": "webpack --config webpack.config.babel.js --output-filename index.umd.js",
     "build:umd.min": "webpack --config webpack.config.babel.js --output-filename index.umd.min.js -p",
-    "build:utilities": "webpack --config webpack.config.utilities.babel.js --output-filename utilities.umd.min.js -p",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {

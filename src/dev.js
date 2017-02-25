@@ -1,6 +1,6 @@
 import DragFile from './DragFile.js'
 import Capture from './Capture.js'
-import Render from './Render.js'
+import Handwrite from './Handwrite.js'
 
 
 const dragTarget = document.getElementById('dragTarget');
@@ -24,7 +24,7 @@ const startOver = document.getElementById('startOver');
 
 class Dev {
 	constructor() {
-		this.render = null
+
 
 		brushSize.addEventListener('change', this.brushUpdate.bind(this))
 		this.capture = new Capture(captureCanvas, brushSize.value)
@@ -72,12 +72,12 @@ class Dev {
 
 		this.capture.signals.pointsUpdated.add(this.pointsUpdated)
 
-		this.render = new Render(renderCanvas, renderImage)
+		this.handwrite = new Handwrite(renderCanvas, renderImage)
 	}
 
 
 	draw(points) {
-		this.render.draw(points, {radius:this.capture.radius})
+		this.handwrite.draw(points, {radius:this.capture.radius})
 	}
 
 
