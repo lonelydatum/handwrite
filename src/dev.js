@@ -3,6 +3,7 @@ import Capture from './Capture.js'
 import Handwrite from './Handwrite.js'
 
 
+
 const dragTarget = document.getElementById('dragTarget');
 const captureCanvas = document.getElementById('captureCanvas');
 const captureImage = document.getElementById('captureImage');
@@ -29,6 +30,7 @@ class Dev {
 		this.brush = brushSize.value
 		this.image = null
 
+		console.log(localStorage);
 		if(localStorage.length>0) {
 			this.updateFromLocal()
 			this.ready()
@@ -41,14 +43,17 @@ class Dev {
 		brushSize.addEventListener('change', ()=>this.brushUpdate(brushSize.value))
 		drawButton.addEventListener('click', this.draw.bind(this), false )
 		undo.addEventListener('click', this.undo.bind(this))
-		startOver.addEventListener('click', this.capture.startOver.bind(this.capture) )
+
 	}
 
 	ready() {
+		console.log(this.points);
 		this.capture = new Capture(captureCanvas, brushSize.value, this.points)
 		this.handwrite = new Handwrite(renderCanvas, renderImage)
 
 		this.capture.signals.pointsUpdated.add(this.pointsUpdated)
+		startOver.addEventListener('click', this.capture.startOver.bind(this.capture) )
+
 		this.loadImage(this.image)
 		this.pointsUpdated(this.points);
 		this.brushUpdate(this.brush)
@@ -101,25 +106,6 @@ class Dev {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 export default new Dev()

@@ -57,18 +57,12 @@ class Handwrite {
 
 
 	drawArt() {
-
 		this.ctxArt.clearRect(0, 0, this.WIDTH, this.HEIGHT)
 		this.ctxArt.drawImage(this.canvasMask, 0, 0);
-
 		this.ctxArt.save();
-
 		this.ctxArt.globalCompositeOperation = 'source-in';
-
 		this.ctxArt.drawImage(this.image, 0, 0);
-
 		this.ctxArt.restore();
-
 	}
 
 	render() {
