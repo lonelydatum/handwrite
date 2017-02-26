@@ -2,7 +2,7 @@
   "name": "handwrite",
   "version": "0.0.0-development",
   "description": "creates masking effect that looks like handwriting",
-  "main": "index.js",
+  "main": "dist/index.umd.js",
   "scripts": {
     "start": "node server.js",
     "commit": "git-cz",
