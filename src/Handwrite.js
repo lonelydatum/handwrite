@@ -1,4 +1,5 @@
 import {Circle} from './Helper'
+import {TimelineMax} from 'gsap'
 
 class Handwrite {
 	constructor(canvas, image) {
@@ -23,11 +24,9 @@ class Handwrite {
 		const tlDraw = new TimelineMax({onComplete:this.onDone.bind(this)})
 		tlDraw.timeScale(timeScale)
 
-		let size = 0
-		points.map(item=>{
+		points.forEach(item=>{
 			tlDraw.addCallback(()=>{
 				Circle(this.ctxMask, item.x, item.y, radius)
-				size++
 			}, "+=.01")
 		})
 
@@ -51,8 +50,8 @@ class Handwrite {
 
 
 	onDone() {
-		// this.keepRendering = false
-		// this.drawArt()
+		this.keepRendering = false
+		this.drawArt()
 	}
 
 
@@ -66,7 +65,7 @@ class Handwrite {
 	}
 
 	render() {
-
+		console.log(Math.random());
 		this.drawArt()
 
 		if(!this.keepRendering) {

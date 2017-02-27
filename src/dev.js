@@ -101,7 +101,7 @@ class Dev {
 
 	pointsUpdated(points) {
 		pointsTextArea.value = JSON.stringify(points)
-		totalPoint.innerHTML = `${points.length}`
+		// totalPoint.innerHTML = `${points.length}`
 		localStorage.setItem('points', pointsTextArea.value)
 	}
 

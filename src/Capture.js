@@ -27,7 +27,7 @@ class Capture {
 
 		this.storage = []
 
-		this.currentItem = this.points.slice();
+		this.currentItem = []
 
 		this.draw()
 
