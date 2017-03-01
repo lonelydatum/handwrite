@@ -9,4 +9,4 @@ canvas.width = image.width
 canvas.height = image.height
 
 const handwrite = new Handwrite(canvas, image)
-handwrite.draw(points, {brushSize:50, fps:50})
+handwrite.draw(points, {brushSize:50, fps:49})
