@@ -1,5 +1,6 @@
 import {Circle} from './Helper'
-import {TimelineMax} from 'gsap'
+import Animation from './Animation.js'
+
 
 class Handwrite {
 	constructor(canvas, image) {
@@ -13,34 +14,34 @@ class Handwrite {
 
 		this.WIDTH = this.canvasArt.width
 		this.HEIGHT = this.canvasArt.height
+
+		this.defaultOptions = {fps:40, brushSize:6}
+		this.options
+		this.animation = new Animation()
 	}
 
+	animationCallback() {
+		const item = this.points[this.index]
+		if(item) {
+			Circle(this.ctxMask, item.x, item.y, this.options.brushSize)
+		} else {
+			this.onDone()
+		}
+		this.index++
+	}
+
+
+
+
 	draw(points, options) {
+		this.points = points
+		this.index = 0
+
 		this.clear()
-		const defaultOptions = {timeScale:1, radius:6}
-		const o = {...defaultOptions, ...options}
-		const {timeScale, radius} = o
-		this.tl = new TimelineMax()
-		const tlDraw = new TimelineMax({onComplete:this.onDone.bind(this)})
-		tlDraw.timeScale(timeScale)
-
-		points.forEach(item=>{
-			tlDraw.addCallback(()=>{
-				Circle(this.ctxMask, item.x, item.y, radius)
-			}, "+=.01")
-		})
-
-		this.tl.add(tlDraw)
-
-		this.tl.add('final')
-		// this.tl.to(this.canvasArt, .001, {opacity:0}, 'final')
-		// this.tl.to(this.image, .001, {opacity:1}, 'final')
-
-
+		this.options =  {...this.defaultOptions, ...options}
+		this.animation.startAnimating(this.options.fps, this.animationCallback.bind(this))
 		this.keepRendering = true
 		this.render()
-		return this.tl
-
 	}
 
 	clear() {
@@ -50,6 +51,7 @@ class Handwrite {
 
 
 	onDone() {
+		this.animation.stop = true
 		this.keepRendering = false
 		this.drawArt()
 	}
@@ -65,9 +67,8 @@ class Handwrite {
 	}
 
 	render() {
-		console.log(Math.random());
 		this.drawArt()
-
+		// console.log(Math.random());
 		if(!this.keepRendering) {
 			return
 		}
