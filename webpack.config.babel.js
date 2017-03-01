@@ -3,7 +3,7 @@ import {join} from 'path'
 const include = join(__dirname, 'src')
 
 export default {
-  entry: './src/HandwriteES5__ENTRY.js',
+  entry: './src/Handwrite.js',
   output: {
     path: join(__dirname, 'dist'),
     libraryTarget: 'umd',

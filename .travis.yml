@@ -7,7 +7,6 @@ notifications:
 node_js:
   - '7'
 before_script:
-  - npm install -g npm@latest
   - npm prune
 script:
   - npm run build
