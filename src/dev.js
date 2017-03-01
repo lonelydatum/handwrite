@@ -9,4 +9,4 @@ canvas.width = image.width
 canvas.height = image.height
 
 const handwrite = new Handwrite(canvas, image)
-
+console.log(this);
