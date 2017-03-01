@@ -134,7 +134,7 @@ var Handwrite = function () {
 	}, {
 		key: 'draw',
 		value: function draw(points, options) {
-			alert(JSON.stringify(options));
+			// alert(JSON.stringify(options))
 			this.index = 0;
 			this.points = points;
 
