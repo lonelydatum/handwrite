@@ -34,7 +34,7 @@ class Handwrite {
 
 
 	draw(points, options) {
-		alert(JSON.stringify(options))
+		// alert(JSON.stringify(options))
 		this.index = 0
 		this.points = points
 
