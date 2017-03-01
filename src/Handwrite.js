@@ -15,17 +15,24 @@ class Handwrite {
 		this.WIDTH = this.canvasArt.width
 		this.HEIGHT = this.canvasArt.height
 
-		this.defaultOptions = {fps:40, brushSize:6}
+		this.defaultOptions = {fps:40, brushSize:6, loop:false}
 		this.options
 		this.animation = new Animation()
 	}
 
 	animationCallback() {
 		const item = this.points[this.index]
+		console.log(this.index);
 		if(item) {
 			Circle(this.ctxMask, item.x, item.y, this.options.brushSize)
 		} else {
-			this.onDone()
+			if( this.options.loop) {
+				this.index = 0
+				this.clear()
+			} else {
+				this.onDone()
+			}
+
 		}
 		this.index++
 	}
@@ -41,6 +48,7 @@ class Handwrite {
 
 		this.clear()
 		this.options =  {...this.defaultOptions, ...options}
+		console.log(this.options);
 		this.animation.startAnimating(this.options.fps, this.animationCallback.bind(this))
 		this.keepRendering = true
 		this.render()
