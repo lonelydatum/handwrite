@@ -7,7 +7,7 @@ export default {
   output: {
     path: join(__dirname, 'dist'),
     libraryTarget: 'umd',
-    library: 'Handwrite'
+    library: 'Freckles'
   },
   devtool: 'source-map',
   module: {
