@@ -73,192 +73,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _Helper = __webpack_require__(2);
-
-var _Animation = __webpack_require__(1);
-
-var _Animation2 = _interopRequireDefault(_Animation);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Handwrite = function () {
-	function Handwrite(canvas, image) {
-		_classCallCheck(this, Handwrite);
-
-		this.image = image;
-		this.canvasArt = canvas;
-		this.canvasMask = this.canvasArt.cloneNode();
-		// document.body.appendChild(this.canvasMask)
-		this.ctxArt = this.canvasArt.getContext('2d');
-		this.ctxMask = this.canvasMask.getContext('2d');
-
-		this.WIDTH = this.canvasArt.width;
-		this.HEIGHT = this.canvasArt.height;
-
-		this.defaultOptions = { fps: 40, brushSize: 6 };
-		this.options;
-		this.animation = new _Animation2.default();
-	}
-
-	_createClass(Handwrite, [{
-		key: 'animationCallback',
-		value: function animationCallback() {
-			var item = this.points[this.index];
-			if (item) {
-				(0, _Helper.Circle)(this.ctxMask, item.x, item.y, this.options.brushSize);
-			} else {
-				this.onDone();
-			}
-			this.index++;
-		}
-	}, {
-		key: 'draw',
-		value: function draw(points, options) {
-			// alert(JSON.stringify(options))
-			this.index = 0;
-			this.points = points;
-
-			this.clear();
-			this.options = _extends({}, this.defaultOptions, options);
-			this.animation.startAnimating(this.options.fps, this.animationCallback.bind(this));
-			this.keepRendering = true;
-			this.render();
-		}
-	}, {
-		key: 'clear',
-		value: function clear() {
-			this.ctxArt.clearRect(0, 0, this.WIDTH, this.HEIGHT);
-			this.ctxMask.clearRect(0, 0, this.WIDTH, this.HEIGHT);
-		}
-	}, {
-		key: 'onDone',
-		value: function onDone() {
-			this.animation.stop = true;
-			this.keepRendering = false;
-			this.drawArt();
-		}
-	}, {
-		key: 'drawArt',
-		value: function drawArt() {
-			this.ctxArt.clearRect(0, 0, this.WIDTH, this.HEIGHT);
-			this.ctxArt.drawImage(this.canvasMask, 0, 0);
-			this.ctxArt.save();
-			this.ctxArt.globalCompositeOperation = 'source-in';
-			this.ctxArt.drawImage(this.image, 0, 0);
-			this.ctxArt.restore();
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			this.drawArt();
-			// console.log(Math.random());
-			if (!this.keepRendering) {
-				return;
-			}
-			requestAnimationFrame(this.render.bind(this));
-		}
-	}]);
-
-	return Handwrite;
-}();
-
-exports.default = Handwrite;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Animation = function () {
-	function Animation() {
-		_classCallCheck(this, Animation);
-
-		this.stop = false;
-		this.frameCount = 0;
-
-		this.fpsInterval;
-		this.startTime;
-		this.now;
-		this.then;
-		this.elapsed;
-	}
-
-	_createClass(Animation, [{
-		key: "startAnimating",
-		value: function startAnimating(fps, callback) {
-			// console.log(this);
-			this.callback = callback;
-			this.fpsInterval = 1000 / fps;
-			this.then = Date.now();
-			this.startTime = this.then;
-			this.animate();
-		}
-	}, {
-		key: "animate",
-		value: function animate() {
-
-			// request another frame
-			if (this.stop) {
-				return;
-			}
-			requestAnimationFrame(this.animate.bind(this));
-
-			// calc elapsed time since last loop
-
-			this.now = Date.now();
-			this.elapsed = this.now - this.then;
-			// console.log(this.fpsInterval);
-			// if enough time has elapsed, draw the next frame
-
-			if (this.elapsed > this.fpsInterval) {
-
-				// Get ready for next frame by setting then=now, but also adjust for your
-				// specified fpsInterval not being a multiple of RAF's interval (16.7ms)
-				this.then = this.now - this.elapsed % this.fpsInterval;
-				this.callback();
-				// console.log(Math.random());
-				// Put your drawing code here
-			}
-		}
-	}]);
-
-	return Animation;
-}();
-
-exports.default = Animation;
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -283,19 +102,125 @@ function Circle(ctx, x, y) {
 exports.Circle = Circle;
 
 /***/ }),
-/* 3 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _Handwrite = __webpack_require__(0);
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
 
-var _Handwrite2 = _interopRequireDefault(_Handwrite);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-module.exports = _Handwrite2.default;
+var _Helper = __webpack_require__(0);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Handwrite = function () {
+	function Handwrite(canvas, image) {
+		_classCallCheck(this, Handwrite);
+
+		this.image = image;
+		this.canvasArt = canvas;
+		this.canvasMask = this.canvasArt.cloneNode();
+		// document.body.appendChild(this.canvasMask)
+		this.ctxArt = this.canvasArt.getContext('2d');
+		this.ctxMask = this.canvasMask.getContext('2d');
+
+		this.WIDTH = this.canvasArt.width;
+		this.HEIGHT = this.canvasArt.height;
+
+		this.defaultOptions = {
+			speed: 3,
+			brushSize: 6,
+			repeat: 0,
+			cleanFromBehind: false,
+			cleanUpWhenDone: false,
+			callback: null
+		};
+
+		this.options;
+		this.interval;
+		this.timeout;
+		this.loopCount = 0;
+	}
+
+	_createClass(Handwrite, [{
+		key: 'drawCycle',
+		value: function drawCycle() {
+			var _this = this;
+
+			this.index = 0;
+			this.clear();
+			clearInterval(this.interval);
+			clearTimeout(this.timeout);
+			this.interval = setInterval(function () {
+				var pos = _this.points[_this.index];
+
+				if (pos) {
+					_this.drawArt(pos, _this.options.brushSize);
+				} else {
+
+					_this.onDoneForever();
+					if (_this.options.callback) {
+						_this.options.callback();
+					}
+
+					if (_this.loopCount < _this.options.repeat) {
+						_this.loopCount++;
+						_this.timeout = setTimeout(_this.drawCycle.bind(_this), 1000);
+					}
+				}
+				_this.index++;
+			}, this.options.speed);
+		}
+	}, {
+		key: 'draw',
+		value: function draw(points, options) {
+			this.loopCount = 0;
+			this.points = points;
+			this.options = _extends({}, this.defaultOptions, options);
+			this.drawCycle();
+		}
+	}, {
+		key: 'clear',
+		value: function clear() {
+			this.ctxArt.clearRect(0, 0, this.WIDTH, this.HEIGHT);
+			this.ctxMask.clearRect(0, 0, this.WIDTH, this.HEIGHT);
+		}
+	}, {
+		key: 'drawArt',
+		value: function drawArt(pos) {
+			(0, _Helper.Circle)(this.ctxMask, pos.x, pos.y, this.options.brushSize);
+			if (this.options.cleanFromBehind) {
+				this.ctxMask.fillRect(0, 0, pos.x - 30, this.HEIGHT);
+			}
+			this.ctxArt.clearRect(0, 0, this.WIDTH, this.HEIGHT);
+			this.ctxArt.drawImage(this.canvasMask, 0, 0);
+			this.ctxArt.save();
+			this.ctxArt.globalCompositeOperation = 'source-in';
+			this.ctxArt.drawImage(this.image, 0, 0);
+			this.ctxArt.restore();
+		}
+	}, {
+		key: 'onDoneForever',
+		value: function onDoneForever() {
+			if (this.options.cleanUpWhenDone) {
+				this.ctxMask.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+			}
+			clearInterval(this.interval);
+			// this.drawArt()
+		}
+	}]);
+
+	return Handwrite;
+}();
+
+exports.default = Handwrite;
 
 /***/ })
 /******/ ]);

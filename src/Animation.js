@@ -21,8 +21,22 @@ export default class Animation {
 	    this.startTime = this.then;
 	    this.animate();
 	}
-
 	animate() {
+		// if(this.stop){
+	 //    	return
+	 //    }
+		// requestAnimationFrame(this.animate.bind(this));
+		// this.callback()
+
+		const si = setInterval(()=>{
+			this.callback()
+			if(this.stop) {
+				clearInterval(si)
+			}
+		}, 1)
+	}
+
+	animate_() {
 
 	    // request another frame
 	    if(this.stop){
