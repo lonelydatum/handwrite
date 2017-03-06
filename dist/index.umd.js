@@ -195,10 +195,14 @@ var Handwrite = function () {
 	}, {
 		key: 'drawArt',
 		value: function drawArt(pos) {
-			(0, _Helper.Circle)(this.ctxMask, pos.x, pos.y, this.options.brushSize);
-			if (this.options.cleanFromBehind) {
-				this.ctxMask.fillRect(0, 0, pos.x - 30, this.HEIGHT);
+			if (pos) {
+				(0, _Helper.Circle)(this.ctxMask, pos.x, pos.y, this.options.brushSize);
+
+				if (this.options.cleanFromBehind) {
+					this.ctxMask.fillRect(0, 0, pos.x - 30, this.HEIGHT);
+				}
 			}
+
 			this.ctxArt.clearRect(0, 0, this.WIDTH, this.HEIGHT);
 			this.ctxArt.drawImage(this.canvasMask, 0, 0);
 			this.ctxArt.save();
@@ -210,10 +214,11 @@ var Handwrite = function () {
 		key: 'onDoneForever',
 		value: function onDoneForever() {
 			if (this.options.cleanUpWhenDone) {
+				this.ctxMask.fillStyle = "#31B131";
 				this.ctxMask.fillRect(0, 0, this.WIDTH, this.HEIGHT);
+				this.drawArt();
 			}
 			clearInterval(this.interval);
-			// this.drawArt()
 		}
 	}]);
 
